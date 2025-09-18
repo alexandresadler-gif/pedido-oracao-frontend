@@ -1,5 +1,7 @@
 // Serviço de API para comunicação com o backend
-const baseURL = import.meta.env.VITE_API_BASE_URL || 'https://pedido-oracao-backend.onrender.com';
+const baseURL =
+  (import.meta.env.VITE_API_BASE_URL || 'https://pedido-oracao-backend.onrender.com')
+    .replace(/\/+$/, '') + '/api';
 
 
 class ApiService {
@@ -20,28 +22,28 @@ class ApiService {
     return headers;
   }
 
-  // Método genérico para fazer requisições
-  async request(endpoint, options = {}) {
-    const url = `${API_BASE_URL}${endpoint}`;
-    const config = {
-      headers: this.getHeaders(),
-      ...options,
-    };
+// Método genérico para fazer requisições
+async request(endpoint, options = {}) {
+  const url = `${baseURL}${endpoint}`;
+  const config = {
+    headers: this.getHeaders(),
+    ...options,
+  };
 
-    try {
-      const response = await fetch(url, config);
-      const data = await response.json();
+  try {
+    const response = await fetch(url, config);
+    const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.error || 'Erro na requisição');
-      }
-
-      return data;
-    } catch (error) {
-      console.error('Erro na API:', error);
-      throw error;
+    if (!response.ok) {
+      throw new Error(data.error || 'Erro na requisição');
     }
+
+    return data;
+  } catch (error) {
+    console.error('Erro na API:', error);
+    throw error;
   }
+}
 
   // Métodos de autenticação
   async login(username, password) {
