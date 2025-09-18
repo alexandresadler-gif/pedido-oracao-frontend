@@ -1,5 +1,6 @@
 // Serviço de API para comunicação com o backend
-const API_BASE_URL = 'http://localhost:5000/api';
+const baseURL = import.meta.env.VITE_API_BASE_URL || 'https://pedido-oracao-backend.onrender.com';
+
 
 class ApiService {
   constructor() {
